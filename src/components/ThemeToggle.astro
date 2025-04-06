@@ -1,0 +1,30 @@
+---
+import Sun from "../assets/sun.svg";
+---
+
+<button
+    class="btn btn-square btn-ghost"
+    id="theme-toggle"
+>
+    <Sun />
+</button>
+<script is:inline>
+    const isDarkTheme = (() => {
+      if (localStorage?.getItem("isDark") !== null) {
+        return localStorage.getItem("isDark") === "true";
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    })();
+  
+    document.documentElement.setAttribute('data-theme', isDarkTheme ? 'halloween' : 'garden');
+  
+    const handleToggleClick = () => {
+      const element = document.documentElement;
+      const currentIsDark = element.getAttribute('data-theme') === 'halloween';
+      const newIsDark = !currentIsDark;
+      element.setAttribute('data-theme', newIsDark ? 'halloween' : 'garden');
+      localStorage.setItem('isDark', newIsDark.toString());
+    }
+  
+    document.getElementById("theme-toggle")?.addEventListener("click", handleToggleClick);
+  </script>
